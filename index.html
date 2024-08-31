@@ -5,46 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Restaurante - Presentación del Libro</title>
     
-    <!-- Google Site Verification Meta Tag -->
-    <meta name="google-site-verification" content="93OrO0S97qnIB4kdzvUeN4oDolsU4g0si8hYxLl9cXs" />
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Descubre 'El Restaurante', un libro que te llevará al corazón de la alta cocina, escrito por el renombrado chef Juan Pérez. ¡Disponible ahora!">
+    <!-- Meta etiquetas vacías para ser llenadas dinámicamente -->
+    <meta name="description" content="">
     <meta name="keywords" content="El Restaurante, libro de cocina, alta gastronomía, Juan Pérez, recetas">
     <meta name="author" content="Juan Pérez">
 
-    <!-- Open Graph Meta Tags (para compartir en redes sociales) -->
-    <meta property="og:title" content="El Restaurante - Presentación del Libro">
-    <meta property="og:description" content="Explora el mundo de la alta gastronomía con 'El Restaurante', un libro del chef Juan Pérez. ¡Haz clic para saber más!">
-    <meta property="og:image" content="https://i.ibb.co/N6dVzv8/Photoroom-20240510-233942.png">
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
     <meta property="og:url" content="https://mipaginapluss.github.io/Seo/">
     <meta property="og:type" content="website">
 
-    <!-- Twitter Card Meta Tags (para compartir en Twitter) -->
+    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="El Restaurante - Presentación del Libro">
-    <meta name="twitter:description" content="Descubre 'El Restaurante', un libro del chef Juan Pérez que te llevará al corazón de la alta cocina. ¡Consíguelo ahora!">
-    <meta name="twitter:image" content="https://i.ibb.co/N6dVzv8/Photoroom-20240510-233942.png">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="">
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Presentación del Libro: "El Restaurante"</h1>
+        <h1 id="book-title">Presentación del Libro</h1>
     </header>
 
-    <!-- Contenido de la página -->
     <section class="intro">
-        <img src="https://i.ibb.co/N6dVzv8/Photoroom-20240510-233942.png" alt="Portada del libro 'El Restaurante'">
+        <img id="book-image" src="" alt="Portada del libro">
         <div class="book-details">
             <h2>Sobre el Libro</h2>
-            <p>"El Restaurante" es una obra cautivadora que te sumergirá en el fascinante mundo de la gastronomía, explorando los secretos mejor guardados de la cocina de alta gama.</p>
+            <p id="book-description"></p>
         </div>
     </section>
 
-    <!-- Otros contenidos -->
-    <!-- ... -->
+    <section class="author">
+        <h2>Sobre el Autor</h2>
+        <p>El autor, Juan Pérez, es un renombrado chef con más de 20 años de experiencia...</p>
+    </section>
 
-    <script src="scripts.js"></script>
+    <section class="purchase">
+        <h2>Compra el Libro</h2>
+        <button id="buy-button">Comprar Ahora</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 "El Restaurante". Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Hacer la solicitud para obtener los datos
+        fetch('https://sheetdb.io/api/v1/cvnbs97ws1jjr/search?ID=1')
+        .then(response => response.json())
+        .then(data => {
+            // Si hay datos, llenarlos en las metaetiquetas y en el contenido de la página
+            if(data.length > 0) {
+                const record = data[0];
+                
+                // Metaetiquetas
+                document.querySelector('meta[name="description"]').setAttribute('content', record.descripción);
+                document.querySelector('meta[property="og:title"]').setAttribute('content', record.título);
+                document.querySelector('meta[property="og:description"]').setAttribute('content', record.descripción);
+                document.querySelector('meta[property="og:image"]').setAttribute('content', record.enlace);
+                document.querySelector('meta[name="twitter:title"]').setAttribute('content', record.título);
+                document.querySelector('meta[name="twitter:description"]').setAttribute('content', record.descripción);
+                document.querySelector('meta[name="twitter:image"]').setAttribute('content', record.enlace);
+
+                // Contenido del cuerpo de la página
+                document.getElementById('book-title').innerText = record.título;
+                document.getElementById('book-image').setAttribute('src', record.enlace);
+                document.getElementById('book-description').innerText = record.descripción;
+            }
+        })
+        .catch(error => console.error('Error al obtener los datos:', error));
+    </script>
 </body>
-</html>
+    </html>
